@@ -2,12 +2,15 @@ package com.sucorrientazoadomicilio.controller;
 
 import com.sucorrientazoadomicilio.model.Address;
 import com.sucorrientazoadomicilio.utils.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class FlowController implements Runnable{
 
     //<editor-fold desc="Attributes">
+    private static final Logger logger = LogManager.getLogger(FlowController.class);
     private final DronController dronController = new DronController();
     private final OrderValidator orderValidator = new OrderValidator();
     private final DataReader dataReader = new TextReader();
@@ -52,5 +55,7 @@ public class FlowController implements Runnable{
             dataWriter.writeData(Parameters.WRITE_INVALID_ORDERS_PATH, Parameters.WRITE_DRON_INVALID_ORDERS_PREFIX + dronFileName + Parameters.WRITE_DRON_ORDERS_EXTENSION,
                     invalidOrders);
         }
+
+        logger.info(Parameters.EXECUTION_FINALIZED_MESSAGE);
     }
 }
